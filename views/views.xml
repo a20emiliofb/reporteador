@@ -1,0 +1,101 @@
+<odoo>
+  <data>
+
+    <record id="view_all_reports_tree" model="ir.ui.view">
+      <field name="name">Reportes</field>
+      <field name="model">reporteador.report</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="titulo" />
+          <field name="fecha_reporte" />
+          <field name="fecha_solucionado" />
+          <field name="cliente_id" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_all_reports_form" model="ir.ui.view">
+      <field name="name">Reportes</field>
+      <field name="model">reporteador.report</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="titulo" />
+              <field name="descripcion" />
+              <field name="fecha_reporte" />
+              <field name="fecha_solucionado" />
+              <field name="empleados_ids" domain="[('is_employee','=',True)]" />
+              <field name="cliente_id" domain="[('is_client','=',True)]" />
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="view_partner_form" model="ir.ui.view">
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form" />
+      <field name="arch" type="xml">
+        <field name="website" position="after">
+          <field name="is_employee"/>
+          <field name="is_client"/>
+        </field>
+      </field>
+    </record>
+
+    <act_window id="action_all_reports" name="Reportes" res_model="reporteador.report" view_mode="tree,form" limit="20" />
+
+    <act_window id="action_all_clients" name="Clientes" res_model="res.partner" view_mode="tree,form" domain="[('is_client', '=', True)]" limit="20"/>
+    
+    <act_window id="action_all_employees" name="Empleados" res_model="res.partner" view_mode="tree,form" domain="[('is_employee', '=', True)]" limit="20"/>
+
+    <record id="action_all_reports_tree" model="ir.actions.act_window.view">
+      <field name="act_window_id" ref="action_all_reports" />
+      <field name="view_id" ref="view_all_reports_tree" />
+      <field name="view_mode">tree</field>
+      <field name="sequence" eval="2" />
+    </record>
+
+    <record id="action_all_reports_form" model="ir.actions.act_window.view">
+      <field name="act_window_id" ref="action_all_reports" />
+      <field name="view_id" ref="view_all_reports_form" />
+      <field name="view_mode">form</field>
+      <field name="sequence" eval="2" />
+    </record>
+
+    <record id="action_all_clients_tree" model="ir.actions.act_window.view">
+      <field name="act_window_id" ref="action_all_clients" />
+      <field name="view_id" ref="base.view_partner_tree" />
+      <field name="view_mode">tree</field>
+      <field name="sequence" eval="2" />
+    </record>
+
+    <record id="action_all_clients_form" model="ir.actions.act_window.view">
+      <field name="act_window_id" ref="action_all_clients" />
+      <field name="view_id" ref="view_partner_form" />
+      <field name="view_mode">form</field>
+      <field name="sequence" eval="2" />
+    </record>
+
+    <record id="action_all_employees_tree" model="ir.actions.act_window.view">
+      <field name="act_window_id" ref="action_all_employees" />
+      <field name="view_id" ref="base.view_partner_tree" />
+      <field name="view_mode">tree</field>
+      <field name="sequence" eval="2" />
+    </record>
+
+    <record id="action_all_employees_form" model="ir.actions.act_window.view">
+      <field name="act_window_id" ref="action_all_employees" />
+      <field name="view_id" ref="view_partner_form" />
+      <field name="view_mode">form</field>
+      <field name="sequence" eval="2" />
+    </record>
+
+    <menuitem id="menu_custom_top_level" name="Reporteador" />
+    <menuitem id="menu_all_reports" parent="menu_custom_top_level" action="action_all_reports" sequence="10" groups="" />
+    <menuitem id="menu_all_clients" parent="menu_custom_top_level" action="action_all_clients" sequence="10" groups="" />
+    <menuitem id="menu_all_employees" parent="menu_custom_top_level" action="action_all_employees" sequence="10" groups="" />
+
+  </data>
+</odoo>
